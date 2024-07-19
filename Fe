@@ -1,0 +1,34 @@
+-- Define the URLs for the scripts
+local scripts = {
+    "https://raw.githubusercontent.com/MysteryPerson20/Chat-script-fe-V2/main/HumanoidRootPartSbg",
+    "https://raw.githubusercontent.com/MysteryPerson20/Press-g/main/Sbg",
+    "https://raw.githubusercontent.com/MysteryPerson20/Tp-/main/V2",
+    "https://raw.githubusercontent.com/MysteryPerson20/Equip-3/main/Tool"
+}
+
+-- Function to load and execute a script
+local function executeScript(url)
+    local success, err = pcall(function()
+        loadstring(game:HttpGet(url))()
+    end)
+    if not success then
+        warn("Failed to execute script from URL:", url, "\nError:", err)
+    end
+end
+
+-- Execute the first two scripts immediately
+for i = 1, 2 do
+    coroutine.wrap(executeScript)(scripts[i])
+end
+
+-- Function to execute the last two scripts after a delay
+local function delayedExecution(delay)
+    wait(delay)
+    -- Execute the last two scripts concurrently
+    for i = 3, 4 do
+        coroutine.wrap(executeScript)(scripts[i])
+    end
+end
+
+-- Start the delayed execution
+coroutine.wrap(delayedExecution)(1.7)
